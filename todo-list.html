@@ -37,7 +37,13 @@
                       <i class="fas fa-times text-primary"></i>
                     </a>
                   </li>`);
-              $("input", todo).on("click", checkTodoMarkStatus);
+              $("input", todo).on("click", function (e) {
+                checkTodoMarkStatus().then(function (data) {
+                  if (data.count == 5) {
+                    alert("Congrats. 5 Tasks have been Successfully Completed");
+                  }
+                });
+              });
               $("#todoList").append(todo);
             }
           });
@@ -45,9 +51,9 @@
 
       function checkTodoMarkStatus() {
         let toDoMarkedCount = $("input:checked").length;
-        if (toDoMarkedCount == 5) {
-          alert("Congrats. 5 Tasks have been Successfully Completed");
-        }
+        return new Promise(function (resolve, reject) {
+          resolve({ count: toDoMarkedCount });
+        });
       }
     </script>
   </head>
@@ -73,25 +79,7 @@
           <div class="col col-xl-10">
             <div class="card" style="border-radius: 15px">
               <div class="card-body p-5">
-                <h6 class="mb-3">Awesome Todo List</h6>
-
-                <form
-                  class="d-flex justify-content-center align-items-center mb-4"
-                >
-                  <div class="form-outline flex-fill">
-                    <input
-                      type="text"
-                      id="form3"
-                      class="form-control form-control-lg"
-                    />
-                    <label class="form-label" for="form3"
-                      >What do you need to do today?</label
-                    >
-                  </div>
-                  <button type="submit" class="btn btn-primary btn-lg ms-2">
-                    Add
-                  </button>
-                </form>
+                <h4 class="mb-3">Awesome Todo List</h4>
 
                 <ul class="list-group mb-0" id="todoList"></ul>
               </div>
